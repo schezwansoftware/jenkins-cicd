@@ -1,0 +1,22 @@
+version: '2'
+services:
+    cdm-cassandra:
+        image: cassandra:3.9
+        # volumes:
+        #     - ~/volumes/jhipster/cdm/cassandra/:/var/lib/cassandra/data
+        ports:
+            - 7000:7000
+            - 7001:7001
+            - 7199:7199
+            - 9042:9042
+            - 9160:9160
+    cdm-cassandra-node:
+        image: cassandra:3.9
+        environment:
+            - CASSANDRA_SEEDS=cdm-cassandra
+    cdm-cassandra-migration:
+        extends:
+            file: cassandra-migration.yml
+            service: cdm-cassandra-migration
+        environment:
+            - CREATE_KEYSPACE_SCRIPT=create-keyspace-prod.cql

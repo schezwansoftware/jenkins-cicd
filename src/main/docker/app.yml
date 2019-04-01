@@ -1,0 +1,25 @@
+version: '2'
+services:
+    cdm-app:
+        image: cdm
+        environment:
+            - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATA_CASSANDRA_CONTACTPOINTS=cdm-cassandra
+            - JHIPSTER_SLEEP=30 # gives time for the Cassandra cluster to start and execute the migration scripts
+        ports:
+            - 8080:8080
+    cdm-cassandra:
+        extends:
+            file: cassandra-cluster.yml
+            service: cdm-cassandra
+    cdm-cassandra-node:
+        image: cassandra:3.9
+        environment:
+            - CASSANDRA_SEEDS=cdm-cassandra
+    cdm-cassandra-migration:
+        extends:
+            file: cassandra-migration.yml
+            service: cdm-cassandra-migration
+        environment:
+            - CREATE_KEYSPACE_SCRIPT=create-keyspace-prod.cql

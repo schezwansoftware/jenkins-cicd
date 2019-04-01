@@ -27,7 +27,7 @@ spring:
             enabled: false
     data:
         cassandra:
-            contactPoints: 10.10.1.166
+            contactPoints: 192.168.1.18
             protocolVersion: V4
             compression: LZ4
             keyspaceName: cdm

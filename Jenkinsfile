@@ -34,7 +34,7 @@ node {
     }
 
     stage('publish docker') {
-        docker.withRegistry('http://192.168.1.18:5000', '') {
+        docker.withRegistry('http://10.128.0.6:5000', '') {
             dockerImage.push 'latest'
         }
     }

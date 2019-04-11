@@ -30,11 +30,11 @@ node {
     stage('build docker') {
         sh "cp -R src/main/docker target/"
         sh "cp target/*.war target/docker/"
-        dockerImage = docker.build('docker-login/cdm', 'target/docker')
+        dockerImage = docker.build('jenkins-cicd', 'target/docker')
     }
 
     stage('publish docker') {
-        docker.withRegistry('http://10.128.0.6:5000', '') {
+        docker.withRegistry('http://10.142.0.4:5000', '') {
             dockerImage.push 'latest'
         }
     }
